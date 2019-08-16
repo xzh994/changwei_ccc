@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.lwxg.changweistory">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/changwei"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <service
+            android:name=".servise.PushService"
+            android:process=":push" />
+
+        <receiver android:name=".Receiver.NotificationReceiver"></receiver>
+        <receiver android:name=".Receiver.ShowNotificationReceiver"></receiver>
+
+        <activity android:name=".MainActivity" />
+        <activity android:name=".activity.HpActivity" />
+
+        <activity android:name=".activity.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

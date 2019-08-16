@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/user"
+        android:title="手冲打卡" />
+    <item
+        android:id="@+id/favorite"
+        android:checkable="true"
+        android:title="手冲计时" />
+    <!--<group android:checkableBehavior="single">-->
+
+    <!--</group>-->
+    <item
+        android:id="@+id/hp"
+        android:title="手冲小助手" />
+
+
+    <item
+        android:id="@+id/file"
+        android:title="关于" />
+
+</menu>
