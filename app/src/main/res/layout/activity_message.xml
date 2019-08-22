@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MessageBoardActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f5cf7e">
+
+        <Button
+            android:id="@+id/mb_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#efdaae"
+            android:text="返回" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="所有发言"
+            android:textSize="30dp" />
+    </FrameLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:id="@+id/home_add"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="#efdaae"
+            android:gravity="center"
+            android:text="说话" />
+
+        <Button
+            android:id="@+id/home_meun_my"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="#efdaae"
+            android:gravity="center"
+            android:text="我的发言" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+
+        <EditText
+            android:id="@+id/home_et_search"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/home_bt_search"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:background="#efdaae"
+            android:text="标题查询" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/home_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingVertical="20dp">
+
+    </ListView>
+
+</LinearLayout>

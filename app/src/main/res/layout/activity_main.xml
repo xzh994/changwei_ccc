@@ -26,6 +26,13 @@
                 android:layout_margin="20dp"
                 android:background="#aaa"
                 android:src="@drawable/changwei" />
+
+            <TextView
+                android:id="@+id/main_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
         </LinearLayout>
 
         <!--中心内容 -->

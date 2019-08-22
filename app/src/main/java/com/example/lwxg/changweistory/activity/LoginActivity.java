@@ -8,13 +8,21 @@ import android.os.Bundle;
 
 import com.example.lwxg.changweistory.MainActivity;
 import com.example.lwxg.changweistory.R;
+import com.example.lwxg.changweistory.data.TimeData;
 
 public class LoginActivity extends AppCompatActivity {
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+            TimeData timeData = new TimeData(LoginActivity.this);
+            String id = timeData.selectId();
+            if (!"".equals(id) && id != null) {
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
+            } else {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                finish();
+            }
         }
     };
 

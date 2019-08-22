@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.lwxg.changweistory">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/changwei"
@@ -13,12 +14,15 @@
             android:name=".servise.PushService"
             android:process=":push" />
 
-        <receiver android:name=".Receiver.NotificationReceiver"></receiver>
-        <receiver android:name=".Receiver.ShowNotificationReceiver"></receiver>
+        <receiver android:name=".Receiver.NotificationReceiver" />
+        <receiver android:name=".Receiver.ShowNotificationReceiver" />
 
         <activity android:name=".MainActivity" />
+        <activity android:name=".activity.MessageBoardActivity" />
+        <activity android:name=".activity.InfoActivity" />
+        <activity android:name=".activity.MyMessgaesActivity" />
+        <activity android:name=".activity.MessageReleaseActivity" />
         <activity android:name=".activity.HpActivity" />
-
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +30,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.ClockActivity"></activity>
     </application>
 
 </manifest>

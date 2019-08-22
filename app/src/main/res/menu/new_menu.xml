@@ -2,21 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/user"
-        android:title="手冲打卡" />
+        android:title="开始计时" />
+    <item
+        android:id="@+id/daka"
+        android:title="今日未冲打卡" />
+    <item
+        android:id="@+id/paihb"
+        android:title="冲冲排行榜" />
     <item
         android:id="@+id/favorite"
-        android:checkable="true"
         android:title="手冲计时" />
+    <item
+        android:id="@+id/talk"
+        android:title="肠胃说话" />
     <!--<group android:checkableBehavior="single">-->
 
     <!--</group>-->
+    <!--<item-->
+    <!--android:id="@+id/hp"-->
+    <!--android:title="手冲小助手" />-->
     <item
-        android:id="@+id/hp"
-        android:title="手冲小助手" />
-
+        android:id="@+id/update"
+        android:title="检查更新" />
 
     <item
         android:id="@+id/file"
         android:title="关于" />
+
 
 </menu>
