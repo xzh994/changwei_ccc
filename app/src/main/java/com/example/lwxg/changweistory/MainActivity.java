@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     if (status.equals("success")) {
                         String msg = jsonObject.getString("msg");
                         if (!msg.equals(getAppVersionName(context))) {
-                            remindUpdate();
+                            remindUpdate(msg);
                         } else {
                             Toast.makeText(context, "已经是最新版本了！", Toast.LENGTH_SHORT).show();
                         }
@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    private void remindUpdate() {
+    private void remindUpdate(final String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View v = View.inflate(context, R.layout.new_version, null);
         show = builder.setNegativeButton("更新", new DialogInterface.OnClickListener() {
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("http://116.62.110.51:8080/cw_ccc_official" + getAppVersionName(context) + ".apk")
+                        Uri.parse("http://116.62.110.51:8080/cw_ccc_official" + msg + ".apk")
                 );
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
