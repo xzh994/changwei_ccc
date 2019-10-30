@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/user"
-        android:title="开始计时" />
-    <item
         android:id="@+id/daka"
-        android:title="今日未冲打卡" />
+        android:title="签到打卡" />
+    <item
+        android:id="@+id/login"
+        android:title="退出登录" />
+
     <item
         android:id="@+id/paihb"
-        android:title="冲冲排行榜" />
-    <item
-        android:id="@+id/favorite"
-        android:title="手冲计时" />
+        android:title="等级排行榜" />
     <item
         android:id="@+id/talk"
-        android:title="肠胃说话" />
+        android:title="说话" />
     <!--<group android:checkableBehavior="single">-->
 
     <!--</group>-->

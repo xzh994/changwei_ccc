@@ -3,7 +3,6 @@ package com.example.lwxg.changweistory;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -19,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,11 +27,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lwxg.changweistory.Receiver.ShowNotificationReceiver;
-import com.example.lwxg.changweistory.activity.ClockActivity;
+import com.example.lwxg.changweistory.activity.EnterActivity;
 import com.example.lwxg.changweistory.activity.HpActivity;
+import com.example.lwxg.changweistory.activity.InfoActivity;
 import com.example.lwxg.changweistory.activity.MessageBoardActivity;
+import com.example.lwxg.changweistory.adapter.MessageAdapter;
 import com.example.lwxg.changweistory.adapter.PHBListAdapter;
 import com.example.lwxg.changweistory.data.TimeData;
+import com.example.lwxg.changweistory.model.Messages;
 import com.example.lwxg.changweistory.model.User;
 import com.example.lwxg.changweistory.util.NetTool;
 
@@ -39,9 +42,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -50,33 +53,19 @@ import java.util.TimerTask;
 import okhttp3.FormBody;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
-    Context context = this;
+    private Context context = this;
     private ImageView main_menu;
     private NavigationView nav;
     private DrawerLayout activity_na;
-    private TextView main_sctime;
-    TimeData timeData;
-    Handler handler = new Handler() {
+    private TimeData timeData;
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 0) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String daka = simpleDateFormat.format(new Date());
-                Date d1 = null, d2 = null;
-                try {
-                    d1 = simpleDateFormat.parse(daka);
-                    d2 = simpleDateFormat.parse(timeData.selectTime());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                long times = d1.getTime() - d2.getTime();
-
-                String ftime = f(times);
-
-                main_sctime.setText("距离上次手冲已有  " + ftime);
             } else if (msg.what == 100) {
-                adapter.notifyDataSetChanged();
+                phbListAdapteradapter.notifyDataSetChanged();
+            } else if (msg.what == 99) {
+                messageAdapter.notifyDataSetChanged();
             } else {
                 Intent intent = new Intent();
                 ShowNotificationReceiver s = new ShowNotificationReceiver();
@@ -85,31 +74,56 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     };
+    private ListView main_tuijian;
 
-    private String f(long times) {
-        times = times / 1000;
-        int day = 0;
-        int hour = 0;
-        int minute = 0;
-        if (times > 60 * 60 * 24) {
-            day = (int) (times / (60 * 60 * 24));
-            times = times % (60 * 60 * 24);
-        }
-        if (times > 60 * 60) {
-            hour = (int) (times) / (60 * 60);
-            times %= (60 * 60);
-        }
-        if (times > 60) {
-            minute = (int) (times) / 60;
-            times %= 60;
-        }
-        return day + "天" + hour + "小时" + minute + "分钟" + times + "秒";
+    private TextView main_tjsx;
+    private Timer timer = new Timer();
+    private TextView main_name;
+    private MessageAdapter messageAdapter;
+    private List<Messages> messages;
+    private List<Messages> zs_ms;
+
+    private void initData() {
+
+        messages.clear();
+        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=selectBlog_list";
+        FormBody body = new FormBody.Builder().build();
+        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
+            @Override
+            public void onBack(String json) {
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    JSONArray array = (JSONArray) jsonObject.get("list");
+                    Log.i("json", array + "");
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject list = array.getJSONObject(i);
+                        String id = list.getString("id");
+                        String title = list.getString("title");
+                        String content = list.getString("content");
+                        String create_time = list.getString("create_time");
+                        String type = list.getString("type");
+                        JSONObject author = (JSONObject) list.get("author");
+                        String username = author.getString("username");
+                        messages.add(new Messages(id, username, title, content, create_time, type));
+                    }
+                    shuaXinShouYe();
 
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
-    Timer timer = new Timer();
-    private TextView main_name;
+    private void shuaXinShouYe() {
+        Collections.shuffle(messages);
+        zs_ms.clear();
+        for (int i = 0; i < Math.min(5, messages.size()); i++) {
+            zs_ms.add(messages.get(i));
+        }
+        messageAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,15 +131,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 //        Log.i("cw_ccc", getAppVersionName(context)+"");
         timeData = new TimeData(context);
+        messages = new ArrayList<>();
+        initData();
         initView();
         initUser();
         gongGao();
         jcUpdate();
-
-        //侧滑头像昵称没效果
-//        View head_view = View.inflate(context, R.layout.head, null);
-//        TextView head_name = head_view.findViewById(R.id.head_name);
-//        head_name.setText(n + "");
 
 
         timer.schedule(new TimerTask() {
@@ -193,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (!msg.equals(getAppVersionName(context))) {
                             remindUpdate(msg);
                         } else {
-                            Toast.makeText(context, "已经是最新版本了！", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "已经是最新版本了！当前版本：" + msg, Toast.LENGTH_SHORT).show();
                         }
                     } else {
                         Toast.makeText(context, "网络错误！", Toast.LENGTH_SHORT).show();
@@ -256,6 +267,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.main_menu://点击菜单，跳出侧滑菜单
                 show();
                 break;
+            case R.id.main_tjsx://点击菜单，跳出侧滑菜单
+                shuaXinShouYe();
+                Toast.makeText(context, "推荐内容已刷新！", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
@@ -268,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initView() {
+        phbList = new ArrayList<User>();
+        zs_ms = new ArrayList<>();
+
         main_menu = (ImageView) findViewById(R.id.main_menu);
         main_menu.setOnClickListener(this);
         nav = (NavigationView) findViewById(R.id.nav);
@@ -281,72 +299,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return true;
             }
         });
+        messageAdapter = new MessageAdapter(context, zs_ms);
         activity_na = (DrawerLayout) findViewById(R.id.activity_na);
         activity_na.setOnClickListener(this);
-        main_sctime = (TextView) findViewById(R.id.main_sctime);
-        main_sctime.setOnClickListener(this);
         main_name = (TextView) findViewById(R.id.main_name);
         main_name.setOnClickListener(this);
+        main_tjsx = findViewById(R.id.main_tjsx);
+        main_tjsx.setOnClickListener(this);
+
+        main_tuijian = (ListView) findViewById(R.id.main_tuijian);
+        main_tuijian.addFooterView(View.inflate(context, R.layout.ms_list_foot, null));
+        main_tuijian.setAdapter(messageAdapter);
+        main_tuijian.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(context, InfoActivity.class);
+                intent.putExtra("title", messages.get(position).getTilte());
+                intent.putExtra("content", messages.get(position).getContent());
+                intent.putExtra("time", messages.get(position).getTime());
+                intent.putExtra("type", messages.get(position).getType());
+                intent.putExtra("username", messages.get(position).getUser());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setTab(MenuItem item) {
         switch (item.getTitle().toString()) {
             default:
                 break;
-
-            case "开始计时":
-                Toast.makeText(MainActivity.this, "开始！", Toast.LENGTH_SHORT).show();
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String daka = simpleDateFormat.format(new Date());
-                timeData.add(daka);
-                int time = (int) Math.random() * 10000 + 5000;
-                handler.sendEmptyMessageDelayed(1, time);
+            case "签到打卡":
+                daKa();
                 break;
-            case "今日未冲打卡":
-                daka();
-                break;
-            case "手冲计时":
-                startActivity(new Intent(context, ClockActivity.class));
-                break;
-            case "冲冲排行榜":
+            case "等级排行榜":
                 phb();
                 break;
             case "检查更新":
                 jcUpdate();
                 break;
-            case "肠胃说话":
+            case "退出登录":
+                startActivity(new Intent(context, EnterActivity.class));
+                finish();
+                break;
+            case "说话":
                 startActivity(new Intent(context, MessageBoardActivity.class));
                 break;
-            //......
-//            case "手冲小助手":
-//                yanZheng();
-//                Toast.makeText(context, "小助手功能已关闭", Toast.LENGTH_SHORT).show();
-//                break;
             case "关于":
-                Toast.makeText(context, "qq群648445631", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "周锡驰臭弟弟", Toast.LENGTH_SHORT).show();
                 erweima();
                 break;
         }
     }
 
-    List<User> list = new ArrayList<User>();
-    PHBListAdapter adapter = null;
+    List<User> phbList;
+    PHBListAdapter phbListAdapteradapter = null;
 
     //排行榜
     private void phb() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View v = View.inflate(context, R.layout.cc_phb, null);
-        ListView phb_list = v.findViewById(R.id.phb_list);
-//        Button phb_rfls = v.findViewById(R.id.phb_rfls);
-//        phb_rfls.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, "刷新成功", Toast.LENGTH_SHORT).show();
-//                adapter = new PHBListAdapter(context, list);
-//                handler.sendEmptyMessage(100);
-//            }
-//        });
-        Toast.makeText(context, "如果没数据请再试一次", Toast.LENGTH_SHORT).show();
+        final ListView phb_list = v.findViewById(R.id.phb_list);
+        ImageView cc_phb_refresh = v.findViewById(R.id.cc_phb_refresh);
+        cc_phb_refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "已刷新！", Toast.LENGTH_SHORT).show();
+                phbListAdapteradapter.notifyDataSetChanged();
+            }
+        });
         String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=selTop";
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
@@ -356,18 +376,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("success")) {
+                        Toast.makeText(context, "如果没数据请再试一次", Toast.LENGTH_SHORT).show();
                         JSONArray jsonArray = (JSONArray) jsonObject.get("list");
-                        list.clear();
+                        phbList.clear();
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject one = (JSONObject) jsonArray.get(i);
                             String name = one.getString("name");
                             int day = one.getInt("day");
                             User user = new User(name, day);
-                            list.add(user);
+                            phbList.add(user);
                         }
-                        adapter = new PHBListAdapter(context, list);
-                        adapter.notifyDataSetChanged();
-                        handler.sendEmptyMessage(100);
+                        phbListAdapteradapter = new PHBListAdapter(context, phbList);
+                        phb_list.setAdapter(phbListAdapteradapter);
+                        phbListAdapteradapter.notifyDataSetChanged();
+                        handler.sendEmptyMessageDelayed(100, 500);
                     } else {
                         Toast.makeText(context, "获取数据失败", Toast.LENGTH_SHORT).show();
                     }
@@ -376,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
-        phb_list.setAdapter(adapter);
+
 
         show = builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
             @Override
@@ -388,7 +410,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         show.show();
     }
 
-    private void daka() {
+    private void daKa() {
         SimpleDateFormat daka_time = new SimpleDateFormat("yyyy-MM-dd");
         String d_t = daka_time.format(new Date());
         Log.i("cw_ccc", d_t);
@@ -425,7 +447,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
 
             }
-        }).setView(v).setTitle("二维码").create();
+        })
+//                .setView(v)
+                .setTitle("优秀大学生").create();
 
         show.show();
     }

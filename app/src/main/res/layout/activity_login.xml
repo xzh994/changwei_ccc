@@ -7,15 +7,12 @@
     tools:context=".activity.LoginActivity">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/today_sc" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Speak"
+        android:textColor="#0c85e9"
+        android:textSize="60dp" />
 
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="今天你🖐🏻🐛了吗"-->
-        <!--android:textColor="#fff"-->
-        <!--android:textSize="30dp" />-->
 
 </FrameLayout>

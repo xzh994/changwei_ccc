@@ -9,28 +9,28 @@
 
         <TextView
             android:id="@+id/list_phb1"
-            android:layout_width="30dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-
-            android:gravity="center_vertical"
-            android:textColor="#f00"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="#00c4ff"
             android:textSize="16dp" />
 
         <TextView
             android:id="@+id/list_phb2"
-            android:layout_width="120dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
             android:textColor="#000"
             android:textSize="16dp" />
 
         <TextView
             android:id="@+id/list_phb3"
-            android:layout_width="60dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center"
             android:textColor="#000"
             android:textSize="16dp" />
     </LinearLayout>

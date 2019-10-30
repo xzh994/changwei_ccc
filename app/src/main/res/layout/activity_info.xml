@@ -9,49 +9,60 @@
 
     <Button
         android:id="@+id/info_back"
-        android:layout_width="match_parent"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:background="#efdaae"
-        android:text="返回" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/yuanjiao_blue_15dp"
+        android:text="返回"
+        android:textColor="#fff" />
 
     <TextView
         android:id="@+id/info_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_margin="15dp"
         android:text="111"
-        android:textSize="25dp" />
+        android:textColor="#000"
+        android:textSize="22dp" />
 
-    <TextView
-        android:id="@+id/info_name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="111"
-        android:textSize="20dp" />
+        android:layout_margin="15dp">
 
-    <TextView
-        android:id="@+id/info_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="111"
-        android:textSize="20dp" />
+        <TextView
+            android:id="@+id/info_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="111"
+            android:textSize="18dp" />
 
-    <TextView
-        android:id="@+id/info_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="111"
-        android:textSize="25dp" />
+        <TextView
+            android:id="@+id/info_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="111"
+            android:textSize="16dp" />
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/info_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:layout_marginTop="10dp"
         android:text="111"
         android:textSize="15dp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/info_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+
 </LinearLayout>

@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -41,7 +42,7 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
     private Button home_bt_search;
     private Button mb_back;
     private MessageAdapter messageAdapter2;
-    Handler handler = new Handler() {
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
 

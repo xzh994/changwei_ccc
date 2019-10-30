@@ -17,7 +17,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -33,7 +34,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:layout_margin="15dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -50,6 +52,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:text="正文:"
         android:textSize="20dp" />
 
@@ -57,21 +60,32 @@
         android:id="@+id/release_et_content"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:layout_marginLeft="15dp"
         android:gravity="top" />
 
-
-    <Button
-        android:id="@+id/release_save"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#efdaae"
-        android:text="发布" />
+        android:layout_marginTop="20dp">
 
-    <Button
-        android:id="@+id/release_back"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="#efdaae"
-        android:text="取消" />
+        <Button
+            android:id="@+id/release_save"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/yuanjiao_blue_15dp"
+            android:text="发布"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/release_back"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="60dp"
+            android:background="@drawable/yuanjiao_blue_15dp"
+            android:text="取消"
+            android:textColor="#fff" />
+    </FrameLayout>
+
 </LinearLayout>

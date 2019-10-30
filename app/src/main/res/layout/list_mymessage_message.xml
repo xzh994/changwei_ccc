@@ -3,45 +3,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="20dp">
 
             <TextView
                 android:id="@+id/myblog_lsit_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="adadada"
+                android:textColor="#000"
+                android:textSize="21dp" />
+
+            <Button
+                android:id="@+id/list_bt_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/yuanjiao_blue_15dp"
+                android:text="删除"
+                android:textColor="#fff" />
+        </FrameLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp">
+
+            <TextView
+                android:id="@+id/myblog_lsit_user"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="adadada"
-                android:textSize="25dp" />
+                android:textSize="16dp" />
+
 
             <TextView
                 android:id="@+id/myblog_list_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="2019年10月10日"
                 android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/myblog_list_cotent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="2019年10月10日"
-                android:textSize="20dp" />
-
         </LinearLayout>
 
-        <Button
-            android:id="@+id/list_bt_delete"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="删除" />
+
+        <TextView
+            android:id="@+id/myblog_list_cotent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:autoLink="all"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="2019年10月10日"
+            android:textSize="13dp" />
 
     </LinearLayout>
 </LinearLayout>

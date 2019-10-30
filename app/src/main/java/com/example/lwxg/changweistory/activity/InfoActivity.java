@@ -3,6 +3,7 @@ package com.example.lwxg.changweistory.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         info_time.setText(intent.getStringExtra("time"));
         info_type.setText(intent.getStringExtra("type"));
         info_content.setText("  "+intent.getStringExtra("content"));
+        info_content.setMovementMethod(ScrollingMovementMethod.getInstance());
     }
 
     private void initView() {
