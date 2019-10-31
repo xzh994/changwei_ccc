@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +39,7 @@ import com.example.lwxg.changweistory.data.TimeData;
 import com.example.lwxg.changweistory.model.Messages;
 import com.example.lwxg.changweistory.model.User;
 import com.example.lwxg.changweistory.util.NetTool;
+import com.example.lwxg.changweistory.util.ZXingUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -75,18 +78,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     };
     private ListView main_tuijian;
-
     private TextView main_tjsx;
     private Timer timer = new Timer();
     private TextView main_name;
     private MessageAdapter messageAdapter;
     private List<Messages> messages;
     private List<Messages> zs_ms;
+    private Bitmap erWeiMa;
 
     private void initData() {
-
         messages.clear();
-        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=selectBlog_list";
+        String url = context.getString(R.string.url) + "Cw/BlogServlet?action=selectBlog_list";
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         timeData = new TimeData(context);
         messages = new ArrayList<>();
         initData();
+        initErWeiMa();
         initView();
         initUser();
         gongGao();
@@ -151,9 +154,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    private void initErWeiMa() {
+        String url = context.getString(R.string.url) + "Cw/UserServlet?action=about";
+        FormBody body = new FormBody.Builder().build();
+        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
+            @Override
+            public void onBack(String json) {
+                try {
+                    JSONObject jsonObject = new JSONObject(json);
+                    String status = jsonObject.getString("status");
+                    if (status.equals("success")) {
+                        String msg = jsonObject.getString("msg");
+                        erWeiMa = ZXingUtils.createQRCode(msg, 400, 400, BitmapFactory.decodeResource(getResources(), R.drawable.changwei));
+                    } else {
+                        Toast.makeText(context, "网络错误！", Toast.LENGTH_SHORT).show();
+                    }
+                    return;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
     //公告
     private void gongGao() {
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=selVersion";
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=selVersion";
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -191,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //检查更新
     private void jcUpdate() {
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=selVersion";
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=selVersion";
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -225,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("http://116.62.110.51:8080/cw_ccc_official" + msg + ".apk")
+                        Uri.parse(context.getString(R.string.url) + "cw_ccc_official" + msg + ".apk")
                 );
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
@@ -236,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initUser() {
         Log.i("cw_ccc", timeData.selectId());
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=selAll&id=" + timeData.selectId();
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=selAll&id=" + timeData.selectId();
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -337,7 +364,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "检查更新":
                 jcUpdate();
                 break;
-            case "退出登录":
+            case "返回登录":
                 startActivity(new Intent(context, EnterActivity.class));
                 finish();
                 break;
@@ -345,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(context, MessageBoardActivity.class));
                 break;
             case "关于":
-                Toast.makeText(context, "周锡驰臭弟弟", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "11", Toast.LENGTH_SHORT).show();
                 erweima();
                 break;
         }
@@ -367,7 +394,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 phbListAdapteradapter.notifyDataSetChanged();
             }
         });
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=selTop";
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=selTop";
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -414,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SimpleDateFormat daka_time = new SimpleDateFormat("yyyy-MM-dd");
         String d_t = daka_time.format(new Date());
         Log.i("cw_ccc", d_t);
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=addRecord&id=" + timeData.selectId() + "&time=" + d_t;
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=addRecord&id=" + timeData.selectId() + "&time=" + d_t;
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -439,22 +466,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void erweima() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View v = View.inflate(context, R.layout.erweima, null);
-
-        show = builder.setPositiveButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        })
-//                .setView(v)
-                .setTitle("优秀大学生").create();
-
+        ImageView erweima_img = v.findViewById(R.id.erweima_img);
+        erweima_img.setImageBitmap(erWeiMa);
+        show = builder.setView(v).setPositiveButton("取消", null).setTitle("关于").create();
         show.show();
     }
 
-    AlertDialog show;
+    private AlertDialog show;
 
     public static String getAppVersionName(Context context) {
         String appVersionName = "";

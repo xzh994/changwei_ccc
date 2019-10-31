@@ -101,7 +101,7 @@ public class MessageReleaseActivity extends AppCompatActivity implements View.On
             Toast.makeText(this, "类型不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=insertBlog_anzhuo&id=" + id + "&title=" + title + "&content=" + content + "&time=" + time + "&type=" + type;
+        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=insertBlog_anzhuo&id=" + id + "&title=" + title + "&content=" + content + "&time=" + time + "&type=" + type;
         //id title content  create_time type
         FormBody body = new FormBody.Builder().build();
 //        FormBody body = new FormBody.Builder().add("id", id).add("title", title).add("content", content).add("time", time).add("type", type).build();

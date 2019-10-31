@@ -68,7 +68,7 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
         blogs.clear();
         String id = data.selectId();
         Log.i("json", id);
-        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=selectAuhorBlog_list&id=" + id;
+        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=selectAuhorBlog_list&id=" + id;
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -112,7 +112,7 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void deleteMessages(String title) {
-        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=deleteBlog_user&id=" + title;
+        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=deleteBlog_user&id=" + title;
         Log.i("json", "title:" + title);
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {

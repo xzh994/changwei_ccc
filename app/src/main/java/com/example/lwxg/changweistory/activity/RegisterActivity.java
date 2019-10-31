@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        String url = "http://116.62.110.51:8080/Cw/UserServlet?action=selName&name=" + name;
+        String url = context.getString(R.string.url)+"Cw/UserServlet?action=selName&name=" + name;
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=register&name=" + name + "&email=" + email;
+        String url2 = context.getString(R.string.url)+"Cw/UserServlet?action=register&name=" + name + "&email=" + email;
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -154,7 +154,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        String url = "http://116.62.110.51:8080/Cw/UserServlet?action=selEmail&email=" + email;
+        String url = context.getString(R.string.url)+"Cw/UserServlet?action=selEmail&email=" + email;
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -172,7 +172,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=sendEmail&email=" + email;
+        String url2 = context.getString(R.string.url)+"Cw/UserServlet?action=sendEmail&email=" + email;
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override

@@ -60,7 +60,7 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
 
     private void initData() {
         messages.clear();
-        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=selectBlog_list";
+        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=selectBlog_list";
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -131,7 +131,7 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
 
     private void getSomeList(String search) {
         someMessages.clear();
-        String url = "http://116.62.110.51:8080/Cw/BlogServlet?action=selectBlog&title=" + search;
+        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=selectBlog&title=" + search;
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override

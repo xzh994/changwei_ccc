@@ -33,7 +33,8 @@
         </activity>
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ClockActivity" />
-        <activity android:name=".activity.EnterActivity"></activity>
+        <activity android:name=".activity.EnterActivity" />
+        <activity android:name=".activity.UserActivity"></activity>
     </application>
 
 </manifest>

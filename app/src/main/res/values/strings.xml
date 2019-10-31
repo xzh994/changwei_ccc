@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Speak</string>
+    <string name="url">http://116.62.110.51:8080/</string>
 </resources>

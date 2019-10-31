@@ -5,7 +5,7 @@
         android:title="签到打卡" />
     <item
         android:id="@+id/login"
-        android:title="个人中心" />
+        android:title="返回登录" />
 
     <item
         android:id="@+id/paihb"

@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -85,7 +86,8 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        String url2 = "http://116.62.110.51:8080/Cw/UserServlet?action=userLogin&name=" + name + "&email=" + pwd;
+        String url2 = context.getString(R.string.url)+"Cw/UserServlet?action=userLogin&name=" + name + "&email=" + pwd;
+        Log.i("enterActivity",url2+"");
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.UserActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#39bafc">
+
+        <Button
+            android:id="@+id/mb_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#39bafc"
+            android:text="返回"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:text="个人中心"
+            android:textColor="#fff"
+            android:textSize="30dp" />
+    </FrameLayout>
+
+
+
+</LinearLayout>
