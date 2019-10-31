@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         if (!msg.equals(getAppVersionName(context))) {
                             remindUpdate(msg);
                         } else {
-                            Toast.makeText(context, "已经是最新版本了！当前版本：" + msg, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "已经是最新版本了！当前版本：" + msg, Toast.LENGTH_LONG).show();
                         }
                     } else {
                         Toast.makeText(context, "网络错误！", Toast.LENGTH_SHORT).show();
