@@ -55,6 +55,12 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         initView();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
     }
 
@@ -120,11 +126,9 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
                 break;
             case R.id.home_meun_my:
                 startActivity(new Intent(context, MyMessgaesActivity.class));
-                finish();
                 break;
             case R.id.home_add:
                 startActivity(new Intent(context, MessageReleaseActivity.class));
-                finish();
                 break;
         }
     }
@@ -166,6 +170,7 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
         String search = home_et_search.getText().toString().trim();
         if (TextUtils.isEmpty(search)) {
             Toast.makeText(this, "搜索词不能为空", Toast.LENGTH_SHORT).show();
+            getSomeList("");
             return;
         }
         getSomeList(search);
@@ -174,6 +179,7 @@ public class MessageBoardActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent(context, InfoActivity.class);
+        intent.putExtra("id", messages.get(position).getId());
         intent.putExtra("title", messages.get(position).getTilte());
         intent.putExtra("content", messages.get(position).getContent());
         intent.putExtra("time", messages.get(position).getTime());

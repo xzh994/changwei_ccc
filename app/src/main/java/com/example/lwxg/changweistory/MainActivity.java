@@ -57,10 +57,22 @@ import okhttp3.FormBody;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context = this;
-    private ImageView main_menu;
+    private TimeData timeData;
+
+    private MessageAdapter messageAdapter;
+    private List<Messages> messages;
+    private List<Messages> zs_ms;
+    private Timer timer = new Timer();
+    private Bitmap erWeiMa;
+
+
     private NavigationView nav;
     private DrawerLayout activity_na;
-    private TimeData timeData;
+    private ImageView main_menu;
+    private ListView main_tuijian;
+    private TextView main_tjsx;
+    private TextView main_name;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -77,14 +89,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
     };
-    private ListView main_tuijian;
-    private TextView main_tjsx;
-    private Timer timer = new Timer();
-    private TextView main_name;
-    private MessageAdapter messageAdapter;
-    private List<Messages> messages;
-    private List<Messages> zs_ms;
-    private Bitmap erWeiMa;
 
     private void initData() {
         messages.clear();
@@ -227,9 +231,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
                     if (status.equals("success")) {
-                        String msg = jsonObject.getString("msg");
-                        if (!msg.equals(getAppVersionName(context))) {
-                            remindUpdate(msg);
+                        double msg = Double.parseDouble(jsonObject.getString("msg"));
+                        if (msg > Double.parseDouble(getAppVersionName(context))) {
+                            remindUpdate(msg + "");
                         } else {
 //                            Toast.makeText(context, "已经是最新版本了！当前版本：" + msg, Toast.LENGTH_LONG).show();
                         }
@@ -341,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(context, InfoActivity.class);
+                intent.putExtra("id", messages.get(position).getId());
                 intent.putExtra("title", messages.get(position).getTilte());
                 intent.putExtra("content", messages.get(position).getContent());
                 intent.putExtra("time", messages.get(position).getTime());
@@ -378,8 +383,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    List<User> phbList;
-    PHBListAdapter phbListAdapteradapter = null;
+    private List<User> phbList;
+    private PHBListAdapter phbListAdapteradapter = null;
 
     //排行榜
     private void phb() {

@@ -3,39 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="20dp">
 
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/yuanjiao_blue"
+                android:src="@drawable/cw_touxiang" />
+
             <TextView
-                android:id="@+id/myblog_lsit_title"
+                android:id="@+id/list_info_reply_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
                 android:text="adadada"
                 android:textColor="#000"
-                android:textSize="21dp" />
+                android:textSize="18dip" />
 
-            <Button
-                android:id="@+id/list_bt_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_gravity="right"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/yuanjiao_blue_15dp"
-                android:text="删除"
-                android:textColor="#fff" />
-        </FrameLayout>
+            <TextView
+                android:id="@+id/list_info_reply_day"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="5"
+                android:text="day1"
+                android:textSize="12dp" />
+
+        </LinearLayout>
 
 
         <LinearLayout
@@ -46,35 +53,25 @@
             android:layout_marginRight="20dp">
 
             <TextView
-                android:id="@+id/myblog_lsit_user"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="adadada"
-                android:textSize="16dp" />
-
-
-            <TextView
-                android:id="@+id/myblog_list_time"
+                android:id="@+id/list_info_reply_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
                 android:text="2019年10月10日"
-                android:textSize="16dp" />
+                android:textSize="12dp" />
         </LinearLayout>
 
 
         <TextView
-            android:id="@+id/myblog_list_cotent"
+            android:id="@+id/list_info_reply_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:ellipsize="end"
-            android:maxLines="3"
             android:text="2019年10月10日"
             android:textSize="13dp" />
+
 
     </LinearLayout>
 </LinearLayout>

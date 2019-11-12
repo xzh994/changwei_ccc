@@ -43,10 +43,10 @@ public class MyMessagesAdapter extends BaseAdapter {
         TextView home_lsit_title = convertView.findViewById(R.id.myblog_lsit_title);
         TextView home_list_time = convertView.findViewById(R.id.myblog_list_time);
         TextView home_list_cotent = convertView.findViewById(R.id.myblog_list_cotent);
-        Button list_bt_delete = convertView.findViewById(R.id.list_bt_delete);
         home_lsit_title.setText(list.get(position).getTilte());
         home_list_time.setText(list.get(position).getTime());
         home_list_cotent.setText(list.get(position).getContent());
+        Button list_bt_delete = convertView.findViewById(R.id.list_bt_delete);
         list_bt_delete.setTag(list.get(position).getId() + "");
         list_bt_delete.setOnClickListener((View.OnClickListener) context);
 

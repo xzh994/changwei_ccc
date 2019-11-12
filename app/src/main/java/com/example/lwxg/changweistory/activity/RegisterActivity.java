@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        String url = context.getString(R.string.url)+"Cw/UserServlet?action=selName&name=" + name;
+        String url = context.getString(R.string.url) + "Cw/UserServlet?action=selName&name=" + name;
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -120,7 +120,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         });
 
 
-        String url2 = context.getString(R.string.url)+"Cw/UserServlet?action=register&name=" + name + "&email=" + email;
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=register&name=" + name + "&email=" + email;
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -147,14 +147,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void submit_yz() {
-
         String email = register_email.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
             Toast.makeText(this, "邮箱不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        String url = context.getString(R.string.url)+"Cw/UserServlet?action=selEmail&email=" + email;
+        String url = context.getString(R.string.url) + "Cw/UserServlet?action=selEmail&email=" + email;
         FormBody body = new FormBody.Builder().build();
         NetTool.netPost(handler, url, body, new NetTool.NetBack() {
             @Override
@@ -172,7 +171,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
         });
 
-        String url2 = context.getString(R.string.url)+"Cw/UserServlet?action=sendEmail&email=" + email;
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=sendEmail&email=" + email;
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -185,7 +184,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         String msg = jsonObject.getString("msg");
                         mes = msg;
                     } else {
-                        Toast.makeText(context, "验证码发送失败，请检查邮箱是否正确（建议使用qq邮箱）", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "验证码发送失败，邮箱已注册或邮箱不正确", Toast.LENGTH_LONG).show();
                     }
                     return;
                 } catch (JSONException e) {
@@ -193,41 +192,5 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
             }
         });
-
-
     }
-
-//    private void initView() {
-//        register_name = (EditText) findViewById(R.id.register_name);
-//        register_bt = (Button) findViewById(R.id.register_bt);
-//
-//        register_bt.setOnClickListener(this);
-//    }
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.register_bt:
-//                submit();
-//                break;
-//        }
-//    }
-//
-//    private void submit() {
-//        // validate
-//        String name = register_name.getText().toString().trim();
-//        if (TextUtils.isEmpty(name)) {
-//            Toast.makeText(this, "name不能为空", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        SharedPreferences sharedPreferences = getSharedPreferences("name", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("n", name);
-//        editor.commit();
-//        startActivity(new Intent(context, MainActivity.class));
-//        // TODO validate success, do something
-//
-//
-//    }
 }

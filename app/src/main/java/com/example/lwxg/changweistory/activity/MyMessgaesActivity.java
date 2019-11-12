@@ -48,11 +48,11 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_message);
+        context = this;
         initView();
     }
 
     private void initView() {
-        context = this;
         blogs = new ArrayList<Messages>();
         initList();
         myMessagesAdapter = new MyMessagesAdapter(context, blogs);
@@ -105,7 +105,6 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
         }
         switch (v.getId()) {
             case R.id.myblog_back:
-                startActivity(new Intent(context, MessageBoardActivity.class));
                 finish();
                 break;
         }

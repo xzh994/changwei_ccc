@@ -27,7 +27,7 @@ import java.util.Date;
 import okhttp3.FormBody;
 
 public class MessageReleaseActivity extends AppCompatActivity implements View.OnClickListener {
-    Context context = this;
+    private Context context = this;
     private TimeData data = new TimeData(MessageReleaseActivity.this);
     private EditText release_et_title;
     private EditText release_type;
@@ -66,7 +66,6 @@ public class MessageReleaseActivity extends AppCompatActivity implements View.On
                 submit();
                 break;
             case R.id.release_back:
-                startActivity(new Intent(context, MessageBoardActivity.class));
                 finish();
 
                 break;
@@ -101,7 +100,7 @@ public class MessageReleaseActivity extends AppCompatActivity implements View.On
             Toast.makeText(this, "类型不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=insertBlog_anzhuo&id=" + id + "&title=" + title + "&content=" + content + "&time=" + time + "&type=" + type;
+        String url = context.getString(R.string.url) + "Cw/BlogServlet?action=insertBlog_anzhuo&id=" + id + "&title=" + title + "&content=" + content + "&time=" + time + "&type=" + type;
         //id title content  create_time type
         FormBody body = new FormBody.Builder().build();
 //        FormBody body = new FormBody.Builder().add("id", id).add("title", title).add("content", content).add("time", time).add("type", type).build();
