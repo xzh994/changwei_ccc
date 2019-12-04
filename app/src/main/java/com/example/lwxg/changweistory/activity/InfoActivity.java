@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 import com.example.lwxg.changweistory.R;
 import com.example.lwxg.changweistory.adapter.ReplyAdapter;
 import com.example.lwxg.changweistory.data.TimeData;
-import com.example.lwxg.changweistory.model.Messages;
 import com.example.lwxg.changweistory.model.Reply;
 import com.example.lwxg.changweistory.util.NetTool;
 
@@ -27,9 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.FormBody;
@@ -76,7 +72,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private View initListHeader() {
-        View listHeader = View.inflate(context, R.layout.info_list_header, null);
+        View listHeader = View.inflate(context, R.layout.header_info_list, null);
         TextView info_title = listHeader.findViewById(R.id.info_title);
         TextView info_name = listHeader.findViewById(R.id.info_name);
         TextView info_time = listHeader.findViewById(R.id.info_time);

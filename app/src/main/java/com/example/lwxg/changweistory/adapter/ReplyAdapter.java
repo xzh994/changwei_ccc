@@ -7,7 +7,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.lwxg.changweistory.R;
-import com.example.lwxg.changweistory.model.Messages;
 import com.example.lwxg.changweistory.model.Reply;
 
 import java.util.List;
@@ -38,7 +37,7 @@ public class ReplyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = View.inflate(context, R.layout.list_info_reply, null);
+        convertView = View.inflate(context, R.layout.item_list_info_reply, null);
         TextView list_info_reply_name = convertView.findViewById(R.id.list_info_reply_name);
         TextView list_info_reply_day = convertView.findViewById(R.id.list_info_reply_day);
         TextView list_info_reply_time = convertView.findViewById(R.id.list_info_reply_time);

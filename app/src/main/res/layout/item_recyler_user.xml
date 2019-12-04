@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <com.haibin.calendarview.CalendarView
-        android:id="@+id/calendar"
+    <TextView
+        android:id="@+id/user_item_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:month_view="com.example.lwxg.changweistory.view.MyCalendar" />
-
-
+        android:padding="20dp"
+        android:textColor="#000"
+        android:textSize="25sp" />
 </LinearLayout>

@@ -39,7 +39,7 @@ public class MyMessagesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = View.inflate(context, R.layout.list_mymessage_message, null);
+        convertView = View.inflate(context, R.layout.item_list_mymessage_message, null);
         TextView home_lsit_title = convertView.findViewById(R.id.myblog_lsit_title);
         TextView home_list_time = convertView.findViewById(R.id.myblog_list_time);
         TextView home_list_cotent = convertView.findViewById(R.id.myblog_list_cotent);

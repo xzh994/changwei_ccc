@@ -13,15 +13,27 @@
     <item
         android:id="@+id/talk"
         android:title="说话" />
+    <item
+        android:id="@+id/user"
+        android:title="个人中心" />
     <!--<group android:checkableBehavior="single">-->
 
     <!--</group>-->
     <!--<item-->
     <!--android:id="@+id/hp"-->
-    <!--android:title="手冲小助手" />-->
+    <!--android:title="冲冲小助手" />-->
     <item
         android:id="@+id/update"
-        android:title="检查更新" />
+        android:title="@string/menu_update" />
+
+    <item
+        android:id="@+id/down_apk"
+        android:title="下载最新apk" />
+
+    <item
+        android:id="@+id/calendar"
+        android:title="日历" />
+
 
     <item
         android:id="@+id/file"

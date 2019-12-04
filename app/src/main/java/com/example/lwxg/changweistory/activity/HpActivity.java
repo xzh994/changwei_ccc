@@ -38,7 +38,7 @@ public class HpActivity extends AppCompatActivity {
 //        home_vedio.requestFocus();
 //        home_vedio.start();
 //
-//    }
+    }
 //
 //    private void initView() {
 //        home_list = (ListView) findViewById(R.id.home_list);
@@ -63,5 +63,5 @@ public class HpActivity extends AppCompatActivity {
 //            home_vedio.requestFocus();
 //            home_vedio.start();
 //        }
-    }
+//    }
 }
