@@ -1,11 +1,13 @@
 package com.example.lwxg.changweistory.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.service.autofill.UserData;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -68,31 +70,28 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
         blogs.clear();
         String id = data.selectId();
         Log.i("json", id);
-        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=selectAuhorBlog_list&id=" + id;
+        String url = context.getString(R.string.url) + "Cw/BlogServlet?action=selectAuhorBlog_list&id=" + id;
         FormBody body = new FormBody.Builder().build();
-        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
-            @Override
-            public void onBack(String json) {
-                try {
-                    Log.i("json", json + "111");
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONArray array = (JSONArray) jsonObject.get("list");
-                    Log.i("json", array + "");
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject list = array.getJSONObject(i);
-                        String id = list.getString("id");
-                        String title = list.getString("title");
-                        String content = list.getString("content");
-                        String create_time = list.getString("create_time");
-                        String type = list.getString("type");
-                        JSONObject author = (JSONObject) list.get("author");
-                        String username = author.getString("username");
-                        blogs.add(new Messages(id, username, title, content, create_time, type));
-                    }
-                    myMessagesAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        NetTool.netPost(handler, url, body, (json) -> {
+            try {
+                Log.i("json", json + "111");
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray array = (JSONArray) jsonObject.get("list");
+                Log.i("json", array + "");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject list = array.getJSONObject(i);
+                    String j_id = list.getString("id");
+                    String title = list.getString("title");
+                    String content = list.getString("content");
+                    String create_time = list.getString("create_time");
+                    String type = list.getString("type");
+                    JSONObject author = (JSONObject) list.get("author");
+                    String username = author.getString("username");
+                    blogs.add(new Messages(j_id, username, title, content, create_time, type));
                 }
+                myMessagesAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -101,7 +100,14 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
     public void onClick(View v) {
         if (v.getTag() != null) {
             Log.i("json", "title:" + v.getTag());
-            deleteMessages(v.getTag().toString());
+            new AlertDialog.Builder(context)
+                    .setCancelable(false)
+                    .setTitle("确定要删除帖子？")
+                    .setNegativeButton("取消", null)
+                    .setPositiveButton("确定", (dialog, which) -> {
+                        deleteMessages(v.getTag().toString());
+                    })
+                    .show();
         }
         switch (v.getId()) {
             case R.id.myblog_back:
@@ -111,23 +117,20 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void deleteMessages(String title) {
-        String url = context.getString(R.string.url)+"Cw/BlogServlet?action=deleteBlog_user&id=" + title;
+        String url = context.getString(R.string.url) + "Cw/BlogServlet?action=deleteBlog_user&id=" + title;
         Log.i("json", "title:" + title);
         FormBody body = new FormBody.Builder().build();
-        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
-            @Override
-            public void onBack(String json) {
-                try {
-                    Log.i("json", json + "");
-                    JSONObject jsonObject = new JSONObject(json);
-                    String status = jsonObject.getString("status");
-                    if (!status.equals("error")) {
-                        Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
-                    }
-                    initList();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        NetTool.netPost(handler, url, body, (json) -> {
+            try {
+                Log.i("json", json + "");
+                JSONObject jsonObject = new JSONObject(json);
+                String status = jsonObject.getString("status");
+                if (!status.equals("error")) {
+                    Toast.makeText(context, "删除成功", Toast.LENGTH_SHORT).show();
                 }
+                initList();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
     }

@@ -71,8 +71,31 @@ public class MyCalendar extends MonthView {
 
     }
 
+
     @Override
     protected void onDrawText(Canvas canvas, Calendar calendar, int x, int y, boolean hasScheme, boolean isSelected) {
+        int cx = x + mItemWidth / 2;
+        int top = y - mItemHeight / 6;
+
+//        boolean isInRange = isInRange(calendar);
+
+        if (isSelected) {
+            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
+                    mSelectTextPaint);
+//            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mSelectedLunarTextPaint);
+        } else if (hasScheme) {
+            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
+                    calendar.isCurrentMonth() && true ? mSchemeTextPaint : mOtherMonthTextPaint);
+
+//            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10, mCurMonthLunarTextPaint);
+        } else {
+            canvas.drawText(String.valueOf(calendar.getDay()), cx, mTextBaseLine + top,
+                    calendar.isCurrentDay() ? mCurDayTextPaint :
+                            calendar.isCurrentMonth() && true ? mCurMonthTextPaint : mOtherMonthTextPaint);
+//            canvas.drawText(calendar.getLunar(), cx, mTextBaseLine + y + mItemHeight / 10,
+//                    calendar.isCurrentDay() && true ? mCurDayLunarTextPaint :
+//                            calendar.isCurrentMonth() ? mCurMonthLunarTextPaint : mOtherMonthLunarTextPaint);
+        }
 
     }
 

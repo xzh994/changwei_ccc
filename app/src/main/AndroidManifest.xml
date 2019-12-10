@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/tubiao"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UserActivity"></activity>
+        <activity android:name=".BaseActivity"></activity>
+        <activity android:name=".usermessage.UserActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

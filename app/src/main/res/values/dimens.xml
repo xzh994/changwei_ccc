@@ -1,0 +1,8 @@
+<resources>
+    <dimen name="picker_view_height">200dp</dimen>
+    <dimen name="date_unit_text_size">18sp</dimen>
+
+
+    <dimen name="px20">13dp</dimen>
+
+</resources>

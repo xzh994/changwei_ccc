@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activity.UserActivity">
+    tools:context=".usermessage.UserActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:background="#39bafc">
 
         <Button
@@ -19,7 +19,7 @@
             android:background="#39bafc"
             android:text="返回"
             android:textColor="#fff"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -27,12 +27,23 @@
             android:gravity="center"
             android:text="个人中心"
             android:textColor="#fff"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/user_recyler"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-</LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/user_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp" />
+
+    <com.example.lwxg.changweistory.usermessage.view.MyTableLayout
+        android:id="@+id/user_table"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom">
+
+    </com.example.lwxg.changweistory.usermessage.view.MyTableLayout>
+
+</FrameLayout>

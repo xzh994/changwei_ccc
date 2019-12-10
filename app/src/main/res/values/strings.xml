@@ -2,8 +2,23 @@
     <string name="app_name">Speak</string>
     <string name="url">http://116.62.110.51:8080/</string>
     <string name="apk_down_url">http://116.62.110.51:8080/cw_ccc_official1.60.apk</string>
-    <string name="apk_down_name"> /cw_ccc_official1.60.apk</string>
+    <string name="apk_down_name">/cw_ccc_official1.60.apk</string>
 
 
     <string name="menu_update">检测更新</string>
+
+
+    <string name="cancel">取消</string>
+    <string name="title">请选择生日</string>
+    <string name="confirm">确定</string>
+    <string name="year">年</string>
+    <string name="month">月</string>
+    <string name="day">日</string>
+    <string name="hour">时</string>
+    <string name="minute">分</string>
+
+    <string name="select_date">选择日期</string>
+    <string name="current_date">当前日期</string>
+    <string name="select_time">选择时间</string>
+    <string name="current_time">当前时间</string>
 </resources>

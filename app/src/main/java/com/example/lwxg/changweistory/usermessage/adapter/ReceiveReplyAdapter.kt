@@ -1,4 +1,4 @@
-package com.example.lwxg.changweistory.adapter
+package com.example.lwxg.changweistory.usermessage.adapter
 
 import android.content.Context
 import android.support.v7.widget.RecyclerView
@@ -8,8 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.lwxg.changweistory.R
 
-@Suppress("UNREACHABLE_CODE")
-class UserAdapter(val context: Context, val list: ArrayList<String>) : RecyclerView.Adapter<UserAdapter.ViewHolder>() {
+class ReceiveReplyAdapter(val context: Context, val list: ArrayList<String>) : RecyclerView.Adapter<ReceiveReplyAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_recyler_user, null, false))
@@ -21,7 +20,7 @@ class UserAdapter(val context: Context, val list: ArrayList<String>) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder?.run {
+        holder.run {
             holder.user_item_menu.text = list[position]
         }
 
@@ -30,6 +29,8 @@ class UserAdapter(val context: Context, val list: ArrayList<String>) : RecyclerV
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val user_item_menu: TextView = itemView.findViewById(R.id.user_item_menu)
+
+
     }
 
 }

@@ -42,7 +42,9 @@ import com.example.lwxg.changweistory.activity.EnterActivity;
 import com.example.lwxg.changweistory.activity.HpActivity;
 import com.example.lwxg.changweistory.activity.InfoActivity;
 import com.example.lwxg.changweistory.activity.MessageBoardActivity;
-import com.example.lwxg.changweistory.activity.UserActivity;
+import com.example.lwxg.changweistory.datepicker.CustomDatePicker;
+import com.example.lwxg.changweistory.datepicker.DateFormatUtils;
+import com.example.lwxg.changweistory.usermessage.UserActivity;
 import com.example.lwxg.changweistory.adapter.MessageAdapter;
 import com.example.lwxg.changweistory.adapter.RankListAdapter;
 import com.example.lwxg.changweistory.data.TimeData;
@@ -55,6 +57,7 @@ import com.example.lwxg.changweistory.util.EasyDownloadUtil;
 import com.example.lwxg.changweistory.util.NetTool;
 import com.example.lwxg.changweistory.util.ToastUtils;
 import com.example.lwxg.changweistory.util.ZXingUtils;
+import com.haibin.calendarview.CalendarView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         messages = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
-            if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
 
 
@@ -163,8 +166,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SharedPreferences.Editor e = MyApp.sharedPreferences.edit();
         e.putFloat("thisAPKVolume", thisAPKVolume);
         e.putFloat("maxAPKVolume", maxAPKVolume);
-       if(!e.commit())
-           ToastUtils.INSTANCE.showToast(context,"下载进度保存失败！");
+        if (!e.commit())
+            ToastUtils.INSTANCE.showToast(context, "下载进度保存失败！");
     }
 
     /**
@@ -454,6 +457,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
+    private CustomDatePicker mDatePicker;
+
+
     private void setTab(MenuItem item) {
         switch (item.getTitle().toString()) {
             default:
@@ -488,8 +494,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "日历":
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 View view = View.inflate(context, R.layout.view_calender, null);
-//                CalendarView calendar = view.findViewById(R.id.calendar);
-//                calendar.getDate();
+                CalendarView calendar = view.findViewById(R.id.calendar);
+                TextView calendar_year = view.findViewById(R.id.calendar_year);
+                calendar_year.setText(String.valueOf(calendar.getCurYear()) + calendar.getCurMonth());
+                initDatePicker(calendar, calendar_year);
+                Button make_calendar = view.findViewById(R.id.make_calendar);
+                make_calendar.setOnClickListener(v -> {
+                    mDatePicker.show(calendar.getCurYear() + "-" + calendar.getCurMonth() + "-" + calendar.getCurDay());
+
+//                    calendar.scrollToCalendar(2000, 12, 12);
+//                    calendar_year.setText(String.valueOf(calendar.getCurYear()) + calendar.getCurMonth());
+                });
+
                 show = builder
                         .setTitle("日历")
                         .setView(view)
@@ -498,8 +514,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 show.show();
                 break;
         }
-
     }
+
+    private void initDatePicker(CalendarView calendarView, TextView calendar_year) {
+        long beginTimestamp = DateFormatUtils.str2Long("2009-05-01", false);
+        long endTimestamp = System.currentTimeMillis();
+
+
+        // 通过时间戳初始化日期，毫秒级别
+        mDatePicker = new CustomDatePicker(this, new CustomDatePicker.Callback() {
+            @Override
+            public void onTimeSelected(long timestamp) {
+                String[] thisData = DateFormatUtils.long2Str(timestamp, false).split("-");
+                if (calendarView != null) {
+                    calendarView.scrollToCalendar(Integer.parseInt(thisData[0]), Integer.parseInt(thisData[1]), Integer.parseInt(thisData[2]));
+                    calendar_year.setText(DateFormatUtils.long2Str(timestamp, false));
+                    runOnUiThread(() -> ToastUtils.INSTANCE.showToast(context, DateFormatUtils.long2Str(timestamp, false)));
+                }
+
+            }
+        }, beginTimestamp, endTimestamp);
+        // 不允许点击屏幕或物理返回键关闭
+        mDatePicker.setCancelable(false);
+        // 不显示时和分
+        mDatePicker.setCanShowPreciseTime(false);
+        // 不允许循环滚动
+        mDatePicker.setScrollLoop(false);
+        // 不允许滚动动画
+        mDatePicker.setCanShowAnim(false);
+    }
+
 
     private void downNewVersionAPK() {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
