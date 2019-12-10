@@ -50,12 +50,12 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void initView() {
-        enter_name = (EditText) findViewById(R.id.enter_name);
-        enter_pwd = (EditText) findViewById(R.id.enter_pwd);
-        enter_dl = (Button) findViewById(R.id.enter_dl);
+        enter_name = findViewById(R.id.enter_name);
+        enter_pwd = findViewById(R.id.enter_pwd);
+        enter_dl = findViewById(R.id.enter_dl);
 
         enter_dl.setOnClickListener(this);
-        enter_zc = (Button) findViewById(R.id.enter_zc);
+        enter_zc = findViewById(R.id.enter_zc);
         enter_zc.setOnClickListener(this);
     }
 
@@ -86,8 +86,8 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
-        String url2 = context.getString(R.string.url)+"Cw/UserServlet?action=userLogin&name=" + name + "&email=" + pwd;
-        Log.i("enterActivity",url2+"");
+        String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=userLogin&name=" + name + "&email=" + pwd;
+        Log.i("enterActivity", url2 + "");
         FormBody body2 = new FormBody.Builder().build();
         NetTool.netPost(handler, url2, body2, new NetTool.NetBack() {
             @Override
@@ -104,7 +104,6 @@ public class EnterActivity extends AppCompatActivity implements View.OnClickList
                     } else {
                         Toast.makeText(context, "登陆失败", Toast.LENGTH_SHORT).show();
                     }
-                    return;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

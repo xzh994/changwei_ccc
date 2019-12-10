@@ -49,11 +49,11 @@ public class MessageReleaseActivity extends AppCompatActivity implements View.On
     }
 
     private void initView() {
-        release_et_title = (EditText) findViewById(R.id.release_et_title);
-        release_type = (EditText) findViewById(R.id.release_type);
-        release_et_content = (EditText) findViewById(R.id.release_et_content);
-        release_save = (Button) findViewById(R.id.release_save);
-        release_back = (Button) findViewById(R.id.release_back);
+        release_et_title = findViewById(R.id.release_et_title);
+        release_type = findViewById(R.id.release_type);
+        release_et_content = findViewById(R.id.release_et_content);
+        release_save = findViewById(R.id.release_save);
+        release_back = findViewById(R.id.release_back);
 
         release_save.setOnClickListener(this);
         release_back.setOnClickListener(this);
@@ -104,21 +104,18 @@ public class MessageReleaseActivity extends AppCompatActivity implements View.On
         //id title content  create_time type
         FormBody body = new FormBody.Builder().build();
 //        FormBody body = new FormBody.Builder().add("id", id).add("title", title).add("content", content).add("time", time).add("type", type).build();
-        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
-            @Override
-            public void onBack(String json) {
-                try {
-                    Log.i("json", json + "");
-                    JSONObject jsonObject = new JSONObject(json);
-                    String status = jsonObject.getString("status");
-                    if (!status.equals("error")) {
-                        Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(context, MessageBoardActivity.class));
-                        finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        NetTool.netPost(handler, url, body, (json) -> {
+            try {
+                Log.i("json", json + "");
+                JSONObject jsonObject = new JSONObject(json);
+                String status = jsonObject.getString("status");
+                if (!status.equals("error")) {
+                    Toast.makeText(context, "添加成功", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(context, MessageBoardActivity.class));
+                    finish();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
 

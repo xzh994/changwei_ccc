@@ -9,7 +9,6 @@ import com.example.lwxg.changweistory.R
 import com.example.lwxg.changweistory.adapter.SimpleViewpagerAdapter
 import com.example.lwxg.changweistory.usermessage.weight.ReceiveReplyFragment
 import kotlinx.android.synthetic.main.activity_user.*
-import kotlinx.android.synthetic.main.activity_user.view.*
 
 class UserActivity : BaseActivity() {
 
@@ -25,8 +24,8 @@ class UserActivity : BaseActivity() {
 
         with(user_table as TabLayout) {
             addOnTabSelectedListener(tabSelectedListener)
-            val chat: TabLayout.Tab = this.newTab().setText("聊天")
-            val message: TabLayout.Tab = this.newTab().setText("消息")
+            val chat: TabLayout.Tab = this.newTab().setText(getString(R.string.chat))
+            val message: TabLayout.Tab = this.newTab().setText(getString(R.string.message))
             addTab(chat)
             addTab(message)
             chat.select()

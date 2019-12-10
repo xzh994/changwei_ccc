@@ -55,12 +55,12 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initView() {
-        blogs = new ArrayList<Messages>();
+        blogs = new ArrayList<>();
         initList();
         myMessagesAdapter = new MyMessagesAdapter(context, blogs);
-        myblog_list = (ListView) findViewById(R.id.myblog_list);
+        myblog_list = findViewById(R.id.myblog_list);
         myblog_list.setOnItemClickListener(this);
-        myblog_back = (Button) findViewById(R.id.myblog_back);
+        myblog_back = findViewById(R.id.myblog_back);
 
         myblog_back.setOnClickListener(this);
         myblog_list.setAdapter(myMessagesAdapter);
@@ -104,9 +104,9 @@ public class MyMessgaesActivity extends AppCompatActivity implements View.OnClic
                     .setCancelable(false)
                     .setTitle("确定要删除帖子？")
                     .setNegativeButton("取消", null)
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        deleteMessages(v.getTag().toString());
-                    })
+                    .setPositiveButton("确定", (dialog, which) ->
+                            deleteMessages(v.getTag().toString())
+                    )
                     .show();
         }
         switch (v.getId()) {

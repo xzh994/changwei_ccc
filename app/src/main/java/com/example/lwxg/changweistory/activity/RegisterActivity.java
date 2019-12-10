@@ -49,11 +49,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void initView() {
-        register_name = (EditText) findViewById(R.id.register_name);
-        register_email = (EditText) findViewById(R.id.register_email);
-        register_email_yz = (Button) findViewById(R.id.register_email_yz);
-        register_email_ma = (EditText) findViewById(R.id.register_email_ma);
-        register_zc = (Button) findViewById(R.id.register_zc);
+        register_name = findViewById(R.id.register_name);
+        register_email = findViewById(R.id.register_email);
+        register_email_yz = findViewById(R.id.register_email_yz);
+        register_email_ma = findViewById(R.id.register_email_ma);
+        register_zc = findViewById(R.id.register_zc);
 
         register_email_yz.setOnClickListener(this);
         register_zc.setOnClickListener(this);
@@ -108,10 +108,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 try {
                     JSONObject jsonObject = new JSONObject(json);
                     String status = jsonObject.getString("status");
-                    if (status.equals("success")) {
-                    } else {
+                    if (!status.equals("success")) {
                         Toast.makeText(context, "用户名已注册", Toast.LENGTH_SHORT).show();
-                        return;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -137,7 +135,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     } else {
                         Toast.makeText(context, "注册失败", Toast.LENGTH_SHORT).show();
                     }
-                    return;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -163,7 +160,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String status = jsonObject.getString("status");
                     if (status.equals("error")) {
                         Toast.makeText(context, "邮箱已注册", Toast.LENGTH_SHORT).show();
-                        return;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -181,12 +177,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String status = jsonObject.getString("status");
                     if (status.equals("success")) {
                         Toast.makeText(context, "验证码发送成功，请查看邮箱，切勿重复点击,三十秒未收到请检查邮箱再发送", Toast.LENGTH_LONG).show();
-                        String msg = jsonObject.getString("msg");
-                        mes = msg;
+                        mes = jsonObject.getString("msg");
                     } else {
                         Toast.makeText(context, "验证码发送失败，邮箱已注册或邮箱不正确", Toast.LENGTH_LONG).show();
                     }
-                    return;
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
