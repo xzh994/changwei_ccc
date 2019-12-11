@@ -1,5 +1,6 @@
 package com.example.lwxg.changweistory.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -101,7 +102,7 @@ public class MessageReleaseActivity extends AppCompatActivity implements View.On
             return;
         }
         String url = context.getString(R.string.url) + "Cw/BlogServlet?action=insertBlog_anzhuo&id=" + id + "&title=" + title + "&content=" + content + "&time=" + time + "&type=" + type;
-        //id title content  create_time type
+        //id title content  create_time typeW
         FormBody body = new FormBody.Builder().build();
 //        FormBody body = new FormBody.Builder().add("id", id).add("title", title).add("content", content).add("time", time).add("type", type).build();
         NetTool.netPost(handler, url, body, (json) -> {

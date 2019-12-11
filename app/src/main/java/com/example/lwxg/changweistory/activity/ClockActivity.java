@@ -37,10 +37,10 @@ public class ClockActivity extends AppCompatActivity implements View.OnClickList
     private void initView() {
         timer = new Timer();
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        clock_back = (TextView) findViewById(R.id.clock_back);
-        clock_time = (TextView) findViewById(R.id.clock_time);
-        clock_bt = (Button) findViewById(R.id.clock_bt);
-        clock_upload = (Button) findViewById(R.id.clock_upload);
+        clock_back = findViewById(R.id.clock_back);
+        clock_time = findViewById(R.id.clock_time);
+        clock_bt = findViewById(R.id.clock_bt);
+        clock_upload = findViewById(R.id.clock_upload);
 
         clock_back.setOnClickListener(this);
         clock_bt.setOnClickListener(this);
@@ -66,6 +66,8 @@ public class ClockActivity extends AppCompatActivity implements View.OnClickList
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    if (d2 == null || d1 == null)
+                        return;
                     long times = d2.getTime() - d1.getTime();
                     Log.i("aaaaa", times + "");
                     clock_time.setText(times / 1000 + "." + (times) / 10 % 100 + "秒");

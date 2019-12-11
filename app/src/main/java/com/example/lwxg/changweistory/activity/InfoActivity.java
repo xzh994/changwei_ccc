@@ -57,7 +57,7 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         blog_id = intent.getStringExtra("id");
         Log.i("infoActivity", "--blog_id:" + blog_id);
 
-        info_back = (Button) findViewById(R.id.info_back);
+        info_back = findViewById(R.id.info_back);
         info_list = findViewById(R.id.info_list);
         reply_list_foot_content = findViewById(R.id.reply_list_foot_content);
         reply_list_foot_ok = findViewById(R.id.reply_list_foot_ok);
@@ -91,27 +91,24 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         String url = context.getString(R.string.url) + "Cw/BlogServlet?action=selectReply&id=" + blog_id;
         Log.i("URL", "url:" + url);
         FormBody body = new FormBody.Builder().build();
-        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
-            @Override
-            public void onBack(String json) {
-                try {
-                    Log.i("json", json + "1");
-                    JSONObject jsonObject = new JSONObject(json);
-                    JSONArray array = (JSONArray) jsonObject.get("list");
-                    Log.i("json", array + "3");
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject list = array.getJSONObject(i);
-                        String id = list.getString("id");
-                        String time = list.getString("time");
-                        String content = list.getString("content");
-                        String name = list.getString("reply_user");
-                        String day = list.getString("user_day");
-                        replies.add(new Reply(Integer.parseInt(id), content, time, name, day));
-                    }
-                    replyAdapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        NetTool.netPost(handler, url, body, (String json) -> {
+            try {
+                Log.i("json", json + "1");
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray array = (JSONArray) jsonObject.get("list");
+                Log.i("json", array + "3");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject list = array.getJSONObject(i);
+                    String id = list.getString("id");
+                    String time = list.getString("time");
+                    String content = list.getString("content");
+                    String name = list.getString("reply_user");
+                    String day = list.getString("user_day");
+                    replies.add(new Reply(Integer.parseInt(id), content, time, name, day));
                 }
+                replyAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
     }
@@ -140,21 +137,18 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         //id title content  create_time type
         FormBody body = new FormBody.Builder().build();
 //        FormBody body = new FormBody.Builder().add("id", id).add("title", title).add("content", content).add("time", time).add("type", type).build();
-        NetTool.netPost(handler, url, body, new NetTool.NetBack() {
-            @Override
-            public void onBack(String json) {
-                try {
-                    Log.i("json", json + "");
-                    JSONObject jsonObject = new JSONObject(json);
-                    String status = jsonObject.getString("status");
-                    if (!status.equals("error")) {
-                        Toast.makeText(context, "回复成功", Toast.LENGTH_SHORT).show();
-                        reply_list_foot_content.setText("");
-                        initData();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+        NetTool.netPost(handler, url, body, (String json) -> {
+            try {
+                Log.i("json", json + "");
+                JSONObject jsonObject = new JSONObject(json);
+                String status = jsonObject.getString("status");
+                if (!status.equals("error")) {
+                    Toast.makeText(context, "回复成功", Toast.LENGTH_SHORT).show();
+                    reply_list_foot_content.setText("");
+                    initData();
                 }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         });
     }
