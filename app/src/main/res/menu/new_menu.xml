@@ -6,6 +6,9 @@
     <item
         android:id="@+id/login"
         android:title="返回登录" />
+    <item
+        android:id="@+id/change_head"
+        android:title="更换头像" />
 
     <item
         android:id="@+id/paihb"

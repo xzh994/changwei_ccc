@@ -1,13 +1,19 @@
 package com.example.lwxg.changweistory.adapter;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.lwxg.changweistory.R;
+import com.example.lwxg.changweistory.data.SomeDatas;
 import com.example.lwxg.changweistory.model.Reply;
+import com.example.lwxg.changweistory.util.LocalCacheUtils;
+import com.example.lwxg.changweistory.weight.RoundImageView;
 
 import java.util.List;
 
@@ -42,6 +48,16 @@ public class ReplyAdapter extends BaseAdapter {
         TextView list_info_reply_day = convertView.findViewById(R.id.list_info_reply_day);
         TextView list_info_reply_time = convertView.findViewById(R.id.list_info_reply_time);
         TextView list_info_reply_content = convertView.findViewById(R.id.list_info_reply_content);
+        RoundImageView list_info_reply_img = convertView.findViewById(R.id.list_info_reply_img);
+        try {
+            if (LocalCacheUtils.getCache(list.get(position).getUser_head_image()) == null) {
+                LocalCacheUtils.setCache(list.get(position).getUser_head_image(), BitmapFactory.decodeResource(context.getResources(),
+                        SomeDatas.ARRAY_HEAD_IMAGES[Integer.parseInt(list.get(position).getUser_head_image().split("cat")[1].split(".")[0]) - 1]));
+            }
+            list_info_reply_img.setImageBitmap(LocalCacheUtils.getCache(list.get(position).getUser_head_image()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         list_info_reply_name.setText("" + list.get(position).getUser_name());
         list_info_reply_day.setText("day" + list.get(position).getUser_day());
         list_info_reply_time.setText("" + list.get(position).getTime());

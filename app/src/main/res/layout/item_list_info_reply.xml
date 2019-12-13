@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,11 +16,11 @@
             android:layout_marginTop="12dp"
             android:layout_marginRight="20dp">
 
-            <ImageView
+            <com.example.lwxg.changweistory.weight.RoundImageView
+                android:id="@+id/list_info_reply_img"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/yuanjiao_blue"
-                android:src="@drawable/cw_touxiang" />
+                android:src="@drawable/changweicat3" />
 
             <TextView
                 android:id="@+id/list_info_reply_name"

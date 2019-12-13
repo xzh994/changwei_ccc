@@ -24,6 +24,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.ViewDragHelper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -42,18 +44,22 @@ import com.example.lwxg.changweistory.activity.EnterActivity;
 import com.example.lwxg.changweistory.activity.HpActivity;
 import com.example.lwxg.changweistory.activity.InfoActivity;
 import com.example.lwxg.changweistory.activity.MessageBoardActivity;
-import com.example.lwxg.changweistory.datepicker.CustomDatePicker;
-import com.example.lwxg.changweistory.datepicker.DateFormatUtils;
-import com.example.lwxg.changweistory.usermessage.UserActivity;
+import com.example.lwxg.changweistory.adapter.HeadImagesAdapter;
+import com.example.lwxg.changweistory.data.SomeDatas;
+import com.example.lwxg.changweistory.model.TheView;
+import com.example.lwxg.changweistory.module.datepicker.CustomDatePicker;
+import com.example.lwxg.changweistory.module.datepicker.DateFormatUtils;
+import com.example.lwxg.changweistory.module.usermessage.UserActivity;
 import com.example.lwxg.changweistory.adapter.MessageAdapter;
 import com.example.lwxg.changweistory.adapter.RankListAdapter;
 import com.example.lwxg.changweistory.data.TimeData;
 import com.example.lwxg.changweistory.model.DownloadInfo;
 import com.example.lwxg.changweistory.model.Messages;
 import com.example.lwxg.changweistory.model.User;
-import com.example.lwxg.changweistory.down.DownLoadObserver;
-import com.example.lwxg.changweistory.down.DownloadManager;
+import com.example.lwxg.changweistory.module.down.DownLoadObserver;
+import com.example.lwxg.changweistory.module.down.DownloadManager;
 import com.example.lwxg.changweistory.util.EasyDownloadUtil;
+import com.example.lwxg.changweistory.util.LocalCacheUtils;
 import com.example.lwxg.changweistory.util.NetTool;
 import com.example.lwxg.changweistory.util.ToastUtils;
 import com.example.lwxg.changweistory.util.ZXingUtils;
@@ -91,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private float thisAPKVolume = 0f;
     private float maxAPKVolume = 0f;
+    private TheView theView;
 
     //读写权限
     private static String[] PERMISSIONS_STORAGE = {
@@ -98,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
     //请求状态码
     private static int REQUEST_PERMISSION_CODE = 2;
+    private static final int LOGIN_STATE_REFRESH = 1;
+    private static final int LOGIN_STATE_LOGIN = 0;
 
 
     private void initData() {
@@ -153,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         initData();
         initQRCode();
         initView();
-        initUser();
+        initUser(LOGIN_STATE_LOGIN);
         announcement();
         checkForUpdate();
         setDrawerLeftEdgeSize((Activity) context, activity_na, 1);
@@ -212,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String status = jsonObject.getString("status");
                 if (status.equals("success")) {
                     String msg = jsonObject.getString("msg");
-                    QRCode = ZXingUtils.createQRCode(msg, 400, 400, BitmapFactory.decodeResource(getResources(), R.drawable.changwei));
+                    QRCode = ZXingUtils.createQRCode(msg, 400, 400, BitmapFactory.decodeResource(getResources(), R.drawable.changweicat3));
                 } else
                     ToastUtils.INSTANCE.showToast(context, "网络错误！");
             } catch (JSONException e) {
@@ -376,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void initUser() {
+    private void initUser(int state) {
         Log.i("cw_ccc", timeData.selectId());
         String url2 = context.getString(R.string.url) + "Cw/UserServlet?action=selAll&id=" + timeData.selectId();
         FormBody body2 = new FormBody.Builder().build();
@@ -385,15 +394,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 JSONObject jsonObject = new JSONObject(json);
                 String status = jsonObject.getString("status");
                 if (status.equals("success")) {
-                    ToastUtils.INSTANCE.showToast(context, "登录成功");
+                    if (state == LOGIN_STATE_LOGIN) {
+                        ToastUtils.INSTANCE.showToast(context, "登录成功");
+                    }
                     JSONObject user = (JSONObject) jsonObject.get("list");
                     String u_name = user.getString("name");
                     String u_day = user.getString("day");
+                    String u_headImage = user.getString("head_image");
+                    if (LocalCacheUtils.getCache(u_headImage) == null) {
+                        LocalCacheUtils.setCache(u_headImage, BitmapFactory.decodeResource(context.getResources(),
+                                SomeDatas.ARRAY_HEAD_IMAGES[Integer.parseInt(u_headImage.split("cat")[1].split(".")[0]) - 1]));
+                    }
+
+                    main_menu.setImageBitmap(LocalCacheUtils.getCache(u_headImage));
                     main_name.setText(u_name + "---day" + u_day);
                 } else {
                     ToastUtils.INSTANCE.showToast(context, "获取数据失败");
                 }
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         });
@@ -423,8 +443,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         phbList = new ArrayList<>();
         zs_ms = new ArrayList<>();
+        theView = new TheView();
 
         main_menu = findViewById(R.id.main_menu);
+
         main_menu.setOnClickListener(this);
         nav = findViewById(R.id.nav);
         nav.setNavigationItemSelectedListener((@NonNull MenuItem item) -> {
@@ -470,6 +492,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "等级排行榜":
                 dialogRank();
                 break;
+            case "更换头像":
+                dialogHeadImages();
+                break;
             case "检查更新":
                 checkForUpdate();
 //                openFile(new File("/storage/emulated/0/speak.apk"));
@@ -514,6 +539,65 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 show.show();
                 break;
         }
+    }
+
+    private void dialogHeadImages() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        View view = View.inflate(context, R.layout.dialog_head_image, null);
+        RecyclerView main_recycler_head_images = view.findViewById(R.id.main_recycler_head_images);
+        main_recycler_head_images.setLayoutManager(new GridLayoutManager(context, 3));
+        HeadImagesAdapter headImagesAdapter = new HeadImagesAdapter(context, SomeDatas.ARRAY_HEAD_IMAGES);
+        headImagesAdapter.setOnItemClickListener((position, v) -> {
+            v.setBackgroundResource(R.color.selected_image);
+            headImagesAdapter.notifyItemChanged(position, v);
+
+            if (theView.getView() != null) {
+                theView.getView().setBackgroundResource(R.color.date_picker_bg);
+                if (theView.getPosition() > -1) {
+                    headImagesAdapter.notifyItemChanged(theView.getPosition(), theView.getView());
+                }
+            }
+
+            theView.setPosition(position);
+            theView.setView(v);
+
+        });
+        main_recycler_head_images.setAdapter(headImagesAdapter);
+        show = builder
+                .setTitle("请选择头像")
+                .setView(view)
+                .setCancelable(false)
+                .setPositiveButton(context.getString(R.string.confirm), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ToastUtils.INSTANCE.showToast(context, "position:" + theView.getPosition());
+//                        R.drawable.changweicat3
+                        changeHeadImage();
+                    }
+                })
+                .setNegativeButton(context.getString(R.string.cancel), null)
+                .create();
+        show.show();
+    }
+
+    //更换头像
+    private void changeHeadImage() {
+        String url2 = context.getString(R.string.url) + "Cw/BlogServlet?action=updateHeadImage&uid=" + timeData.selectId() + "&url=" + SomeDatas.ARRAY_HEAD_IMAGES_URL[theView.getPosition()];
+        FormBody body2 = new FormBody.Builder().build();
+        NetTool.netPost(handler, url2, body2, (String json) -> {
+            try {
+                JSONObject jsonObject = new JSONObject(json);
+                String status = jsonObject.getString("status");
+                if (status.equals("success")) {
+                    ToastUtils.INSTANCE.showToast(context, "更换成功！");
+                    initUser(LOGIN_STATE_REFRESH);
+                } else {
+                    ToastUtils.INSTANCE.showToast(context, "更换失败（网络错误）");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void initDatePicker(CalendarView calendarView, TextView calendar_year) {

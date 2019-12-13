@@ -15,4 +15,5 @@
     <color name="current_time_bg">#FFFFFF</color>
     <color name="current_time_text">#666666</color>
     <color name="selected_time_text">#57C5E8</color>
+    <color name="selected_image">#2196F3</color>
 </resources>

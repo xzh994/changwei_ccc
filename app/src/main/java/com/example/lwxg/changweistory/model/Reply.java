@@ -6,16 +6,18 @@ public class Reply {
     private String time;
     private String user_name;
     private String user_day;
+    private String user_head_image;
 
     public Reply() {
     }
 
-    public Reply(int id, String content, String time, String user_name, String user_day) {
+    public Reply(int id, String content, String time, String user_name, String user_day, String user_head_image) {
         this.id = id;
         this.content = content;
         this.time = time;
         this.user_name = user_name;
         this.user_day = user_day;
+        this.user_head_image = user_head_image;
     }
 
     @Override
@@ -26,6 +28,7 @@ public class Reply {
                 ", time='" + time + '\'' +
                 ", user_name='" + user_name + '\'' +
                 ", user_day='" + user_day + '\'' +
+                ", user_head_image='" + user_head_image + '\'' +
                 '}';
     }
 
@@ -67,5 +70,13 @@ public class Reply {
 
     public void setUser_day(String user_day) {
         this.user_day = user_day;
+    }
+
+    public String getUser_head_image() {
+        return user_head_image;
+    }
+
+    public void setUser_head_image(String user_head_image) {
+        this.user_head_image = user_head_image;
     }
 }

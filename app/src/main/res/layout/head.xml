@@ -15,7 +15,7 @@
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:layout_marginTop="42dp"
-            android:src="@drawable/changwei" />
+            android:src="@drawable/changweicat3" />
 
         <TextView
             android:id="@+id/head_name"

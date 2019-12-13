@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Speak</string>
     <string name="url">http://116.62.110.51:8080/</string>
-    <string name="apk_down_url">http://116.62.110.51:8080/cw_ccc_official1.60.apk</string>
-    <string name="apk_down_name">/cw_ccc_official1.60.apk</string>
+    <string name="apk_down_url">http://116.62.110.51:8080/cw_ccc_official1.71.apk</string>
+    <string name="apk_down_name">/cw_ccc_official1.71.apk</string>
 
 
     <string name="menu_update">检测更新</string>
