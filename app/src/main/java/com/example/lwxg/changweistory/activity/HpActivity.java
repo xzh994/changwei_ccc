@@ -2,7 +2,6 @@ package com.example.lwxg.changweistory.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -11,6 +10,8 @@ import android.widget.MediaController;
 import android.widget.VideoView;
 
 import com.example.lwxg.changweistory.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HpActivity extends AppCompatActivity {
 //    Context context = this;

@@ -2,11 +2,12 @@ package com.example.lwxg.changweistory.adapter
 
 import android.content.Context
 import android.graphics.BitmapFactory
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.lwxg.changweistory.R
 import com.example.lwxg.changweistory.data.SomeDatas
 import com.example.lwxg.changweistory.util.LocalCacheUtils
@@ -33,10 +34,18 @@ class HeadImagesAdapter(val context: Context, val list: IntArray) : RecyclerView
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.run {
-            if (LocalCacheUtils.getCache(SomeDatas.ARRAY_HEAD_IMAGES_URL[position]) == null) {
-                LocalCacheUtils.setCache(SomeDatas.ARRAY_HEAD_IMAGES_URL[position], BitmapFactory.decodeResource(context.resources, list[position]))
-            }
-            itemHeadImage.setImageBitmap(LocalCacheUtils.getCache(SomeDatas.ARRAY_HEAD_IMAGES_URL[position]))
+            //            LocalCacheUtils.getCache(SomeDatas.ARRAY_HEAD_IMAGES_URL[position])?.let {
+//                LocalCacheUtils.setCache(SomeDatas.ARRAY_HEAD_IMAGES_URL[position], BitmapFactory.decodeResource(context.resources, list[position]))
+//            }
+//            itemHeadImage.setImageBitmap(LocalCacheUtils.getCache(SomeDatas.ARRAY_HEAD_IMAGES_URL[position]))
+            Glide.with(context)
+                    .load(SomeDatas.ARRAY_HEAD_IMAGES_URL[position])
+                    .centerCrop()
+                    .placeholder(R.drawable.loading)
+//                    .crossFade()
+                    .into(itemHeadImage)
+
+
             itemHeadImage.setOnClickListener { listener?.onClick(position, itemHeadImage) }
         }
     }

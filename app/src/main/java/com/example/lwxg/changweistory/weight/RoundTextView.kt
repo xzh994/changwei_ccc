@@ -3,9 +3,9 @@ package com.example.lwxg.changweistory.weight
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
 import android.util.AttributeSet
 import android.widget.TextView
+import androidx.annotation.ColorInt
 
 
 class RoundTextView : TextView {

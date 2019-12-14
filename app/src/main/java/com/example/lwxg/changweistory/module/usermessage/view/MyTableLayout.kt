@@ -1,11 +1,11 @@
 package com.example.lwxg.changweistory.module.usermessage.view
 
 import android.content.Context
-import android.support.design.widget.TabLayout
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.lwxg.changweistory.R.dimen.px20
+import com.google.android.material.tabs.TabLayout
 
 class MyTableLayout : TabLayout {
 

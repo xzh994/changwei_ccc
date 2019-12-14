@@ -5,22 +5,21 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
-import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Xfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * 自定义的圆角矩形ImageView，可以直接当组件在布局中使用。
  *
  * @author caizhiming
  */
-public class RoundImageView extends android.support.v7.widget.AppCompatImageView {
+public class RoundImageView extends AppCompatImageView {
 
 
     private int mSize;

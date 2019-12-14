@@ -1,14 +1,10 @@
 package com.example.lwxg.changweistory.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.service.autofill.UserData;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +14,7 @@ import android.widget.Toast;
 
 
 import com.example.lwxg.changweistory.R;
+import com.example.lwxg.changweistory.activity.InfoActivity;
 import com.example.lwxg.changweistory.adapter.MyMessagesAdapter;
 import com.example.lwxg.changweistory.data.TimeData;
 import com.example.lwxg.changweistory.model.Messages;
@@ -30,6 +27,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
 
 public class MyMessgaesActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {

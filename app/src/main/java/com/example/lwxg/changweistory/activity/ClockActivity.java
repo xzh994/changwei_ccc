@@ -2,7 +2,6 @@ package com.example.lwxg.changweistory.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +14,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Timer;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ClockActivity extends AppCompatActivity implements View.OnClickListener {
     private Context context = this;

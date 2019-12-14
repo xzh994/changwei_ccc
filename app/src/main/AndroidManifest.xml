@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.lwxg.changweistory">
-
 
     <permission
         android:name="com.example.lwxg.changweistory.permission.JPUSH_MESSAGE"
@@ -35,7 +35,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/tubiao"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
         <!--用户自定义的广播接收器-->
         <receiver
             android:name="com.example.lwxg.changweistory.module.jpush.JPushReceiver"
@@ -74,7 +76,7 @@
         <activity android:name="com.example.lwxg.changweistory.module.usermessage.UserActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.lwxg.changweistory.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">

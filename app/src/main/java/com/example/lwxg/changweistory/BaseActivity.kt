@@ -1,9 +1,9 @@
 package com.example.lwxg.changweistory
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 
 open class BaseActivity : AppCompatActivity() {
     private lateinit var mFragmenManager: FragmentManager

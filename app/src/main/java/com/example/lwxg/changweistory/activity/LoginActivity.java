@@ -3,12 +3,13 @@ package com.example.lwxg.changweistory.activity;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.lwxg.changweistory.MainActivity;
 import com.example.lwxg.changweistory.R;
 import com.example.lwxg.changweistory.data.TimeData;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity {
     Handler handler = new Handler() {

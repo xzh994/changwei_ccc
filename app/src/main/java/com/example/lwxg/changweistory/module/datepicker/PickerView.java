@@ -9,7 +9,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -23,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import androidx.core.content.ContextCompat;
 
 /**
  * 说明：内容选择器，例如年月日、省市区等

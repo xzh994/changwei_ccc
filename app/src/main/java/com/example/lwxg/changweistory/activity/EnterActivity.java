@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,7 @@ import com.example.lwxg.changweistory.util.NetTool;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
 
 public class EnterActivity extends AppCompatActivity implements View.OnClickListener {

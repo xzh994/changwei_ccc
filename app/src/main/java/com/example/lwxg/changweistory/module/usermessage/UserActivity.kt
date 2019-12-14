@@ -1,13 +1,12 @@
 package com.example.lwxg.changweistory.module.usermessage
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.design.widget.TabLayout.OnTabSelectedListener
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.example.lwxg.changweistory.BaseActivity
 import com.example.lwxg.changweistory.R
 import com.example.lwxg.changweistory.adapter.SimpleViewpagerAdapter
 import com.example.lwxg.changweistory.module.usermessage.weight.ReceiveReplyFragment
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_user.*
 
 class UserActivity : BaseActivity() {
@@ -33,7 +32,7 @@ class UserActivity : BaseActivity() {
 
     }
 
-    private val tabSelectedListener = object : OnTabSelectedListener {
+    private val tabSelectedListener = object : TabLayout.OnTabSelectedListener {
         override fun onTabReselected(tab: TabLayout.Tab?) {
             tab?.position?.let { user_viewpager.setCurrentItem(it, false) }
         }

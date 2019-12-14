@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +19,7 @@ import com.example.lwxg.changweistory.util.NetTool;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {

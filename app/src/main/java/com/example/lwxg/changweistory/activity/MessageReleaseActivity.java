@@ -1,12 +1,10 @@
 package com.example.lwxg.changweistory.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +23,7 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.FormBody;
 
 public class MessageReleaseActivity extends AppCompatActivity implements View.OnClickListener {

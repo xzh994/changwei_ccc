@@ -16,16 +16,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.ViewDragHelper;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -39,6 +29,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.lwxg.changweistory.Receiver.ShowNotificationReceiver;
 import com.example.lwxg.changweistory.activity.EnterActivity;
 import com.example.lwxg.changweistory.activity.HpActivity;
@@ -63,6 +54,7 @@ import com.example.lwxg.changweistory.util.LocalCacheUtils;
 import com.example.lwxg.changweistory.util.NetTool;
 import com.example.lwxg.changweistory.util.ToastUtils;
 import com.example.lwxg.changweistory.util.ZXingUtils;
+import com.google.android.material.navigation.NavigationView;
 import com.haibin.calendarview.CalendarView;
 
 import org.json.JSONArray;
@@ -77,6 +69,17 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
+import androidx.customview.widget.ViewDragHelper;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 import okhttp3.FormBody;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -151,6 +154,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         context = this;
         timeData = new TimeData(context);
         messages = new ArrayList<>();
+        JMessageClient.init(context, false);
+        JMessageClient.register("我马玄黄", "1989666290@qq.com", new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                Log.i("Mainactivity", "int1:" + i + "---String:" + s);
+                JMessageClient.login("我马玄黄", "1989666290@qq.com", new BasicCallback() {
+                    @Override
+                    public void gotResult(int i, String s) {
+                        Log.i("Mainactivity", "int2:" + i + "---String:" + s);
+
+                    }
+                });
+            }
+        });
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP)
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
@@ -381,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
             }, 10000);
         } else {
-            ToastUtils.INSTANCE.showToast(context, "安装出错，请重新下载");
+            ToastUtils.INSTANCE.showToast(context, "安装出错，请重新下载(不建议再下载)");
         }
     }
 
@@ -401,12 +418,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String u_name = user.getString("name");
                     String u_day = user.getString("day");
                     String u_headImage = user.getString("head_image");
-                    if (LocalCacheUtils.getCache(u_headImage) == null) {
-                        LocalCacheUtils.setCache(u_headImage, BitmapFactory.decodeResource(context.getResources(),
-                                SomeDatas.ARRAY_HEAD_IMAGES[Integer.parseInt(u_headImage.split("cat")[1].split(".")[0]) - 1]));
-                    }
+                    Glide.with(context)
+                            .load(u_headImage)
+                            .into(main_menu);
+                    Glide.with(context)
+                            .load(u_headImage)
+                            .into((ImageView) nav.getHeaderView(0).findViewById(R.id.person));
 
-                    main_menu.setImageBitmap(LocalCacheUtils.getCache(u_headImage));
                     main_name.setText(u_name + "---day" + u_day);
                 } else {
                     ToastUtils.INSTANCE.showToast(context, "获取数据失败");
@@ -526,7 +544,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Button make_calendar = view.findViewById(R.id.make_calendar);
                 make_calendar.setOnClickListener(v -> {
                     mDatePicker.show(calendar.getCurYear() + "-" + calendar.getCurMonth() + "-" + calendar.getCurDay());
-
 //                    calendar.scrollToCalendar(2000, 12, 12);
 //                    calendar_year.setText(String.valueOf(calendar.getCurYear()) + calendar.getCurMonth());
                 });
@@ -550,7 +567,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         headImagesAdapter.setOnItemClickListener((position, v) -> {
             v.setBackgroundResource(R.color.selected_image);
             headImagesAdapter.notifyItemChanged(position, v);
-
             if (theView.getView() != null) {
                 theView.getView().setBackgroundResource(R.color.date_picker_bg);
                 if (theView.getPosition() > -1) {
